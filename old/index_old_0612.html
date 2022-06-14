@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    const MinuteToHours = () => { 
+        const  [amount, setAmounts] = React.useState();
+        const [inverted, setInverted] = React.useState(false);
+        const onInvert = () => {
+            reset();
+            setInverted((current) => !current);
+        }
+        const onChange = (e) => {
+            setAmounts(e.target.value);
+        };
+        const reset = () => {
+            setAmounts(0)
+        };
+        return(            
+            <div>
+                <div>
+                    <label htmlFor="minutes">나는 분이야 : </label>
+                    <input value={inverted ? amount * 60 : amount } 
+                        id="minutes" 
+                        placeholder="Minutes" 
+                        type="number"
+                        onChange = {onChange}
+                        disabled={inverted}/>
+                </div>
+                <div>
+                    <label htmlFor="hours"> 나는 시간이야 : </label>
+                    <input value={inverted ? amount : Math.round(amount/60)}
+                        id="hours" 
+                        placeholder="Hours" 
+                        type="number"
+                        onChange = {onChange}
+                        disabled={!inverted}/>
+                </div>
+                <button onClick={reset}> Reset </button>
+                <button onClick={onInvert}> {inverted ? "turn back" : "invert"} </button>
+            </div> 
+        )
+    };
+    const KmToMiles = () => {
+        const [amount, setAmounts] = React.useState();
+        const [inverted, setInverted] = React.useState(false);
+        const onInvert = () => {
+            reset();
+            setInverted((current) => !current);
+        }
+        const onChange = (e) => {
+            setAmounts(e.target.value);
+        };
+        const reset = () => {
+            setAmounts(0)
+        };
+        return(            
+            <div>
+                <h3> KM to Miles </h3>
+                <div>
+                    <label htmlFor="km">킬로미터 : </label>
+                    <input value={inverted ? amount * 1.609 : amount } 
+                        id="km" 
+                        placeholder="Kilometer" 
+                        type="number"
+                        onChange = {onChange}
+                        disabled={inverted}/>
+                </div>
+                <div>
+                    <label htmlFor="miles"> 마일스 : </label>
+                    <input value={inverted ? amount : amount / 1.609}
+                        id="miles" 
+                        placeholder="Miles" 
+                        type="number"
+                        onChange = {onChange} 
+                        disabled={!inverted}/>
+                </div>
+                <button onClick={reset}> Reset </button>
+                <button onClick={onInvert}> {inverted ? "turn back" : "invert"} </button>
+            </div> 
+        )
+    }
+    const App = () => {
+        const [index, setIndex] = React.useState("xx");
+    const onSelect = (event) => {
+        setIndex(event.target.value);  
+    }  
+        return(            
+            <div>
+                <h1>Hello 신비 Convert </h1>
+                <select value={index} onChange={onSelect}>
+                    <option value="xx">원하는걸 골라봐?</option> 
+                    <option value="1">분을 시간으로 바꿔죠?</option>  
+                    <option value="2">킬로미터를 마일즈로 바꿔죠? </option>    
+                </select>  
+                <hr/>
+                {index === "xx" ? <h4>신비 변환기야 골라줘? </h4> : null }
+                {index === "1" ? <MinuteToHours /> : null }
+                {index === "2" ? <KmToMiles /> : null }
+            </div>
+            
+        )
+    };
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+</script>
+</html>
+
+ 
+  
