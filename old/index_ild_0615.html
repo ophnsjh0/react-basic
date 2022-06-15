@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    function Btn({ text, onClick, fontSize }) { 
+        console.log({onClick})
+        return(
+            <button 
+            onClick={onClick}
+            style={{
+                backgroundColor : "tomato",
+                color : "white",
+                borderRadius : 10,
+                border : 0,
+                margin : 5,
+                padding: "10px 20px",
+                fontSize,
+            }}>{text}</button>
+        )
+    }
+    const MemorizedBtn = React.memo(Btn);
+
+    Btn.PropTypes = {
+        text: PropTypes.string,
+        fontSize: PropTypes.number.isRequired,
+    };
+
+    const App = () => {
+        const [value, setValue] = React.useState("Save Change");
+        const onChange = () => {
+            setValue("Revert Change");
+        }
+        return(
+        <div>
+            <MemorizedBtn text={value} onClick={onChange} fontSize={18} />
+            <MemorizedBtn text="Continue" />
+        </div> 
+        );
+    };
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+ 
+  
