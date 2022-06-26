@@ -27,7 +27,14 @@ function App() {
           onChange={onChange} />
         <button>Add to do</button>
       </form>
+      <hr/>
+      <ul>
+        {toDos.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
+   
   );
 }
 
