@@ -2,6 +2,7 @@ import {useState,  useEffect} from "react";
 import {useParams} from "react-router-dom";
 import { Link } from "react-router-dom";
 import DetailMovie from "../components/DetailMovie";
+import styles from "./Home.module.css";
 
 function Detail () {
     const {id} = useParams();
@@ -24,14 +25,16 @@ function Detail () {
     useEffect(() => {
         getMovie();
     }, []);
-    return(
-        <div>
-            {loading ? (<h1>Loding...</h1>) : (
-                    <div>
-                        <h3><Link to="/">Home</Link></h3>
+    return(   
+        <div className={styles.container}>
+            
+            {loading ? (<div className={styles.loader}> <span>Loading...</span></div>) : (            
+                <div className={styles.movies}>
+                        
                         {detailMovie.map((Movie) => (
                             <DetailMovie key={Movie.id}
                                 id={Movie.id}
+                                year={Movie.year}
                                 coverImg={Movie.medium_cover_image}
                                 title={Movie.title_long}
                                 detail={Movie.description_full}
@@ -40,8 +43,10 @@ function Detail () {
                         ))}
                     </div>
                 )
-            }   
-        </div>       
+            }             
+           
+        <h4 className={styles.home}><Link to="/">Home</Link></h4> 
+        </div>
     )
 };
 
